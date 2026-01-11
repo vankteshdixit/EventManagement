@@ -1,12 +1,13 @@
 package com.vank.eventManagement.Entity;
 
-import com.vank.eventManagement.Entity.Enums.BookingStatus;
+import com.vank.eventManagement.Entity.Enums.EventStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -36,5 +37,15 @@ public class Event {
     private Integer availableSeats;
 
     @Enumerated(EnumType.STRING)
-    private BookingStatus status;
+    private EventStatus status;
+
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+//  organizer of the event
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "organizer_id", nullable = false)
+    private User organizer;
+
+    @OneToMany(mappedBy="event", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Booking> bookings;
 }
