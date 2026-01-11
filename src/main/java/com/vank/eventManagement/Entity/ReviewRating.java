@@ -1,4 +1,5 @@
 package com.vank.eventManagement.Entity;
 
-public class Role {
+public class ReviewRating {
+
 }
